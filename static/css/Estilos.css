@@ -1,0 +1,45 @@
+*{margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  /* font-size: 100%; */
+  /* vertical-align: baseline; */
+  background: transparent;
+}
+body{
+    margin: 0%;
+    padding: 0%;
+    width: 100%;
+    height: 100%;
+}
+
+/*----- Barra Bienvenida---------*/
+.contenedor{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    float: left;
+    margin: 0%;
+    padding: 0%;
+}
+
+.barra{
+    width: 100%;
+    height: 10%;
+    background-color: #EEF0F0;
+    margin: 0%;
+}
+
+#logo_secretaria{
+    position: absolute;
+    height: 8%;
+    margin: 0.5%;
+    width: auto;
+}
+
+#btn_inicia{
+    float: right;
+    margin: 1%;
+}
+
+
