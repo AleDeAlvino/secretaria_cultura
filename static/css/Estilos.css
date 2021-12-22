@@ -13,7 +13,7 @@ body{
     height: 100%;
 }
 
-/*----- Barra Bienvenida---------*/
+/*----- base barra---------*/
 .contenedor{
     width: 100%;
     height: 100%;
@@ -37,9 +37,62 @@ body{
     width: auto;
 }
 
+#logo_secretaria:hover{
+    cursor: pointer;
+}
+
 #btn_inicia{
     float: right;
     margin: 1%;
 }
 
+/* ------ login -------*/
+#form_login{
+    width: 30%;
+    height: 30%;
+    background-color: #EEF0F0;
+    top: 30vh;
+    left: 35%;
+    position: absolute;
+}
 
+.inp_login{
+    width: 80% !important;
+    margin-top: 4%;
+    margin-left: 10%;
+}
+
+#btn_sesion{
+    margin-top: 6%;
+    margin-left: 40%;
+}
+
+/* ----- Barra seleccion ------ */
+.menu{
+    width: 10%;
+    height: 100%;
+    position: relative;
+    float: left;
+}
+
+.menu:hover{
+    background-color: darkgray;
+    cursor: pointer;
+}
+
+#select_admin{
+    left: 35%;
+}
+
+#select_even{
+    left: 35%;
+}
+
+#select_cons{
+    left: 35%;
+}
+
+.text_menu{
+    text-align: center;
+    margin-top: 14%;
+}
