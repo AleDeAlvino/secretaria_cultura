@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls), #Esta ruta nos va a permitir acceder al administrador de Django
     path('', include('control_usuario.urls')), #Conección con las url de la aplicación control_usuario
+    path('', include('control_catalogos.urls')), #Conección con las url de la aplicación control_usuario
 ]
