@@ -1,0 +1,34 @@
+{% extends 'barra_seleccion.html' %}
+{% block content %}
+<title>Catalogo Paises</title>
+
+<h1 class="tit_pag_cat">Catalogo Paises</h1>
+<div class="formulario-cat">
+    <form action="">
+        <div class="seleccion" id="select-continente">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Selecciona un continente</option>
+                <option value="Asia">Asia</option>
+                <option value="América">América</option>
+                <option value="África">África</option>
+                <option value="Antartida">Antartida</option>
+                <option value="Europa">Europa</option>
+                <option value="Oceanía">Oceanía</option>
+              </select>
+        </div>
+        <div class="seleccion" id="select-pais-cat">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Selecciona un país para editar</option>
+                <option value="Asia">Asia</option>
+              </select>
+        </div>
+        <div class="seleccion">
+            <input class="form-control inp_login inp-cat" type="text" placeholder="País" aria-label="default input example">
+        </div>
+        <div class="seleccion" id="btn-agr">
+            <button type="button" class="btn btn-success">Agregar</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
