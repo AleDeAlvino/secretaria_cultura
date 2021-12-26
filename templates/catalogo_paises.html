@@ -17,18 +17,44 @@
               </select>
         </div>
         <div class="seleccion" id="select-pais-cat">
-            <select class="form-select" aria-label="Default select example">
+            <select class="form-select" aria-label="Default select example" id="s_p_c" onclick="ocultar('btn_agr','s_p_c','btn_edit','inp_pais')">
                 <option selected>Selecciona un país para editar</option>
                 <option value="Asia">Asia</option>
               </select>
         </div>
-        <div class="seleccion">
-            <input class="form-control inp_login inp-cat" type="text" placeholder="País" aria-label="default input example">
+        <div class="seleccion" id="div_inp_cat">
+            <input class="form-control inp_login inp-cat" type="text" id="inp_pais" placeholder="País" aria-label="default input example">
         </div>
         <div class="seleccion" id="btn-agr">
-            <button type="button" class="btn btn-success">Agregar</button>
+            <button type="button" class="btn btn-success" id="btn_agr">Agregar</button>
+        </div>
+        <div class="seleccion s_edit" id="btn-edit">
+            <button type="button" class="btn btn-success" id="btn_edit">Editar</button>
         </div>
     </form>
 </div>
+
+<script type="text/javascript">
+    // console.log("holi 1")
+    function ocultar(id_btn_agr, id_s_p_c, id_btn_edit, id_inp_pais){
+        // console.log("holi 2")
+        var bot_agr = document.getElementById(id_btn_agr);
+        var se_pais = document.getElementById(id_s_p_c);
+        var bot_edit = document.getElementById(id_btn_edit);
+        var input_pais = document.getElementById(id_inp_pais);
+        // console.log(se_pais.value)
+        if(se_pais.value != 'Selecciona un país para editar'){
+            bot_agr.style.display = "none";
+            bot_edit.style.display = "inline";
+            console.log(input_pais.value);
+            input_pais.value = se_pais.value
+        }
+        else{
+            bot_agr.style.display = "inline";
+            bot_edit.style.display = "none";
+            input_pais.value = "";
+        }
+}
+</script>
 
 {% endblock %}
