@@ -36,7 +36,7 @@
             </select>
         </div>
         <div class="seleccion" id="select-pais-cat">
-            <select class="form-select" aria-label="Default select example" id="s_p_c" onclick="ocultar('btn_agr','s_p_c','s_c_c','btn_edit','inp_pais')" name="select_Pais_cat">
+            <select class="form-select" aria-label="Default select example" id="s_p_c" onclick="ocultar('btn_agr','s_p_c','s_c_c','btn_edit','btn_elim','inp_pais')" name="select_Pais_cat">
                 <option selected>Selecciona un país para editar</option>
                 {% for pais in paises %}
                 <option value='{{ pais.pais }}-{{ pais.continente }}'>{{ pais.pais }}</option>
@@ -52,21 +52,26 @@
         <div class="seleccion s_edit" id="btn-edit">
             <input type="submit" class="btn btn-success" id="btn_edit" name="btn_env" value="Editar">
         </div>
+        <div class="seleccion s_elim" id="btn-elim">
+            <input type="submit" class="btn btn-danger" id="btn_elim" name="btn_env" value="Eliminar">
+        </div>
     </form>
 </div>
 
 
 <script type="text/javascript">
-    function ocultar(id_btn_agr, id_s_p_c, id_s_c_c, id_btn_edit, id_inp_pais){
+    function ocultar(id_btn_agr, id_s_p_c, id_s_c_c, id_btn_edit, id_btn_elim, id_inp_pais){
         var bot_agr = document.getElementById(id_btn_agr);
         var se_pais = document.getElementById(id_s_p_c);
         var se_continente = document.getElementById(id_s_c_c);
         var bot_edit = document.getElementById(id_btn_edit);
+        var bot_elim = document.getElementById(id_btn_elim);
         var input_pais = document.getElementById(id_inp_pais);
         console.log("este es continente: ",se_continente.value);
         if(se_pais.value != 'Selecciona un país para editar'){
             bot_agr.style.display = "none";
             bot_edit.style.display = "inline";
+            bot_elim.style.display = "inline";
             valor = se_pais.value
             guion = valor.indexOf('-')
             pais = valor.slice(0,guion)
@@ -77,6 +82,7 @@
         else{
             bot_agr.style.display = "inline";
             bot_edit.style.display = "none";
+            bot_elim.style.display = "none";
             input_pais.value = "";
         }
 }
