@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from .import views
 
 # Urls para acceder a las vistas pertenecientes a control usuarios

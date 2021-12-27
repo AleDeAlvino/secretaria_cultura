@@ -179,3 +179,11 @@ body{
 .s_edit{
     left: 20%;
 }
+
+.alerta_cat{
+    position: relative;
+    float: left;
+    width: 40%;
+    top: 18%;
+    left: 11.5%;
+}

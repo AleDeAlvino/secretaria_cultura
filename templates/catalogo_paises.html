@@ -3,8 +3,27 @@
 <title>Catalogo Paises</title>
 
 <h1 class="tit_pag_cat">Catalogo Paises</h1>
+<div class="alerta_cat">
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
 <div class="formulario-cat">
-    <form action="">
+    <form method="POST">
+        {% csrf_token %}
         <div class="seleccion" id="select-continente">
             <select class="form-select" aria-label="Default select example">
                 <option selected>Selecciona un continente</option>
@@ -23,26 +42,24 @@
               </select>
         </div>
         <div class="seleccion" id="div_inp_cat">
-            <input class="form-control inp_login inp-cat" type="text" id="inp_pais" placeholder="País" aria-label="default input example">
+            <input class="form-control inp_login inp-cat" type="text" id="inp_pais" placeholder="País" aria-label="default input example" name="pais">
         </div>
         <div class="seleccion" id="btn-agr">
-            <button type="button" class="btn btn-success" id="btn_agr">Agregar</button>
+            <input type="submit" class="btn btn-success" id="btn_agr" value="Agregar">
         </div>
         <div class="seleccion s_edit" id="btn-edit">
-            <button type="button" class="btn btn-success" id="btn_edit">Editar</button>
+            <input type="submit" class="btn btn-success" id="btn_edit" value="Editar">
         </div>
     </form>
 </div>
 
+
 <script type="text/javascript">
-    // console.log("holi 1")
     function ocultar(id_btn_agr, id_s_p_c, id_btn_edit, id_inp_pais){
-        // console.log("holi 2")
         var bot_agr = document.getElementById(id_btn_agr);
         var se_pais = document.getElementById(id_s_p_c);
         var bot_edit = document.getElementById(id_btn_edit);
         var input_pais = document.getElementById(id_inp_pais);
-        // console.log(se_pais.value)
         if(se_pais.value != 'Selecciona un país para editar'){
             bot_agr.style.display = "none";
             bot_edit.style.display = "inline";

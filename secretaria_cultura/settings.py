@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'control_usuario.apps.ControlUsuarioConfig'
+    'control_usuario.apps.ControlUsuarioConfig',
+    'control_catalogos.apps.ControlCatalogosConfig'
 ]
 
 MIDDLEWARE = [
@@ -126,7 +127,7 @@ MEDIA_URL = '/media/'
 
 #LOGIN_URL = 'login'
 
-#AUTH_USER_MODEL = 'Control_Usuario.User'
+AUTH_USER_MODEL = 'control_usuario.User'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
