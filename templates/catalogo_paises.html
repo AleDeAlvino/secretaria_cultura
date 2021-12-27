@@ -1,20 +1,20 @@
 {% extends 'barra_seleccion.html' %}
 {% block content %}
-<title>Catalogo Paises</title>
-
-<h1 class="tit_pag_cat">Catalogo Paises</h1>
+<title>Catalogo Paises</title> <!-- Titulo de la pagina -->
+<script src="../static/javascript/js_catalogos.js"></script> <!-- Archivo que se encarga de mostrar y ocultar botones -->
+<h1 class="tit_pag_cat">Catalogo Paises</h1> <!-- Titulo del catalogo -->
 <div class="alerta_cat">
-    {% if messages %}
-        {% for message in messages %}
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    {% if messages %} <!-- Verificamos si hay mensajes de alertas -->
+        {% for message in messages %} <!-- Si las hay se despliegan -->
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} <!-- Los mensajes de exito se mostraran de esta manera -->
                 <div class="alert alert-success alert-dismissible" role="alert">
-                    {{ message }}
+                    {{ message }} <!-- Mensaje enviado desde el servidor -->
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endif %}
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} <!-- Los mensajes de error se mostraran de esta manera -->
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    {{ message }}
+                    {{ message }} <!-- Mensaje enviado desde el servidor -->
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endif %}
@@ -23,9 +23,9 @@
 </div>
 <div class="formulario-cat">
     <form method="POST">
-        {% csrf_token %}
+        {% csrf_token %} <!-- token para poder enviar formulario -->
         <div class="seleccion" id="select-continente">
-            <select class="form-select" aria-label="Default select example" id="s_c_c" name="select_Continente">
+            <select class="form-select" aria-label="Default select example" id="s_c_c" name="select_Continente"> <!-- Select para continente -->
                 <option selected>Selecciona un continente</option>
                 <option value="Asia">Asia</option>
                 <option value="América">América</option>
@@ -36,56 +36,25 @@
             </select>
         </div>
         <div class="seleccion" id="select-pais-cat">
-            <select class="form-select" aria-label="Default select example" id="s_p_c" onclick="ocultar('btn_agr','s_p_c','s_c_c','btn_edit','btn_elim','inp_pais')" name="select_Pais_cat">
+            <select class="form-select" aria-label="Default select example" id="s_p_c" onclick="ocultar('btn_agr','s_p_c','s_c_c','btn_edit','btn_elim','inp_pais')" name="select_Pais_cat"> <!-- Select para pais -->
                 <option selected>Selecciona un país para editar</option>
                 {% for pais in paises %}
-                <option value='{{ pais.pais }}-{{ pais.continente }}'>{{ pais.pais }}</option>
+                <option value='{{ pais.pais }}-{{ pais.continente }}'>{{ pais.pais }}</option> <!-- Mostrar todos los paises que envió el servidor -->
                 {% endfor %}
               </select>
         </div>
         <div class="seleccion" id="div_inp_cat">
-            <input class="form-control inp_login inp-cat" type="text" id="inp_pais" placeholder="País" aria-label="default input example" name="pais">
+            <input class="form-control inp_login inp-cat" type="text" id="inp_pais" placeholder="País" aria-label="default input example" name="pais"> <!-- Input para agregar o editar el país -->
         </div>
         <div class="seleccion" id="btn-agr">
-            <input type="submit" class="btn btn-success" id="btn_agr" name="btn_env" value="Agregar">
+            <input type="submit" class="btn btn-success" id="btn_agr" name="btn_env" value="Agregar"> <!-- Select para agregar -->
         </div>
         <div class="seleccion s_edit" id="btn-edit">
-            <input type="submit" class="btn btn-success" id="btn_edit" name="btn_env" value="Editar">
+            <input type="submit" class="btn btn-success" id="btn_edit" name="btn_env" value="Editar"> <!-- Select para editar -->
         </div>
         <div class="seleccion s_elim" id="btn-elim">
-            <input type="submit" class="btn btn-danger" id="btn_elim" name="btn_env" value="Eliminar">
+            <input type="submit" class="btn btn-danger" id="btn_elim" name="btn_env" value="Eliminar"> <!-- Select para eliminar -->
         </div>
     </form>
 </div>
-
-
-<script type="text/javascript">
-    function ocultar(id_btn_agr, id_s_p_c, id_s_c_c, id_btn_edit, id_btn_elim, id_inp_pais){
-        var bot_agr = document.getElementById(id_btn_agr);
-        var se_pais = document.getElementById(id_s_p_c);
-        var se_continente = document.getElementById(id_s_c_c);
-        var bot_edit = document.getElementById(id_btn_edit);
-        var bot_elim = document.getElementById(id_btn_elim);
-        var input_pais = document.getElementById(id_inp_pais);
-        console.log("este es continente: ",se_continente.value);
-        if(se_pais.value != 'Selecciona un país para editar'){
-            bot_agr.style.display = "none";
-            bot_edit.style.display = "inline";
-            bot_elim.style.display = "inline";
-            valor = se_pais.value
-            guion = valor.indexOf('-')
-            pais = valor.slice(0,guion)
-            continente = valor.slice(guion+1)
-            input_pais.value = pais
-            se_continente.value = continente
-        }
-        else{
-            bot_agr.style.display = "inline";
-            bot_edit.style.display = "none";
-            bot_elim.style.display = "none";
-            input_pais.value = "";
-        }
-}
-</script>
-
 {% endblock %}

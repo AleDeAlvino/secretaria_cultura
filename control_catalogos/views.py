@@ -10,18 +10,18 @@ def administracion_view(request):
     return render(request, 'administracion.html')
 
 def cat_paises_view(request):
-    #Vista para editar el catalogo de paises
-    paises = Paises.objects.all().order_by('pais')
-    if request.method == 'POST':
-        if request.POST['pais'] != '' :
-            conti = request.POST['select_Continente']
-            if conti != 'Selecciona un continente':
-                if conti == 'Asia' or conti == 'América' or conti == 'África' or conti == 'Antartida' or conti == 'Europa' or conti == 'Oceanía':
-                    if request.POST['btn_env'] == 'Agregar':
+    #Vista para agregar, editar y eliminar paises del catalogo de paises
+    paises = Paises.objects.all().order_by('pais') #Traemos todos los paises de la bd para mostrarlos en el select
+    if request.method == 'POST': #Si el formulario a sido mandado por POST empieza el proceso
+        if request.POST['pais'] != '' : #Nos aseguramos que el campo país no esté vacio
+            conti = request.POST['select_Continente'] #Traemos el valor de continente
+            if conti != 'Selecciona un continente': #Si es diferente de la opción defaul procede
+                if conti == 'Asia' or conti == 'América' or conti == 'África' or conti == 'Antartida' or conti == 'Europa' or conti == 'Oceanía': #Nos aseguramos que solo haya escogido alguna opción del select
+                    if request.POST['btn_env'] == 'Agregar': #Si la opción que eligio fue agregar procede
                         try:
-                            pais, created = Paises.objects.get_or_create(pais=request.POST['pais'], continente=request.POST['select_Continente'])
+                            pais, created = Paises.objects.get_or_create(pais=request.POST['pais'], continente=request.POST['select_Continente']) #Comando para saber si existe o no el objeto, si no existe lo crea
                             if created:
-                                pais.save()
+                                pais.save() #Se guarda el nuevo objeto
                                 messages.success(request, 'Se agregó el país correctamente')
                             else:
                                 messages.error(request, 'Ya existe el país ' + request.POST['pais'])
@@ -29,20 +29,20 @@ def cat_paises_view(request):
                             messages.error(request, 'Ya existe el país ')
                     else:
                         valor = request.POST['select_Pais_cat']
-                        pais_env = valor[0:valor.find('-')]
-                        if Paises.objects.filter(pais=pais_env).exists():
-                            if request.POST['btn_env'] == 'Editar':
-                                if pais_env != request.POST['pais']:
+                        pais_env = valor[0:valor.find('-')] #Extraemos el valor enviado dejando solamente el país
+                        if Paises.objects.filter(pais=pais_env).exists(): #Verificamos si existe el país que se mandó
+                            if request.POST['btn_env'] == 'Editar': #Si la opción que eligio fue editar procede
+                                if pais_env != request.POST['pais']: #Verificamos que realmente hubo cambios
                                     pais_editar = Paises.objects.get(pais=pais_env)
-                                    pais_editar.pais = request.POST['pais']
-                                    pais_editar.continente = request.POST['select_Continente']
-                                    pais_editar.save()
+                                    pais_editar.pais = request.POST['pais'] #Le damos el nuevo valor de país
+                                    pais_editar.continente = request.POST['select_Continente'] #Le damos el nuevo valor de continente
+                                    pais_editar.save() #Se guardan los cambios
                                     messages.success(request, 'País actualizado')
                                 else:
                                     messages.error(request, 'No ha habido ningun cambio')
-                            elif request.POST['btn_env'] == 'Eliminar':
-                                pais_borrar = get_object_or_404(Paises,pais=pais_env)
-                                pais_borrar.delete();
+                            elif request.POST['btn_env'] == 'Eliminar': #Si la opción que eligio fue eliminar procede
+                                pais_borrar = get_object_or_404(Paises,pais=pais_env) #Traemos el objeto a eliminar
+                                pais_borrar.delete(); #Se elimina
                                 messages.success(request, 'País Eliminado')
                             else:
                                 messages.error(request, 'No existe esa opcion')
