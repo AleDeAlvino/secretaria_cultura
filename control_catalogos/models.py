@@ -8,3 +8,10 @@ class Paises(models.Model):
     continente = models.CharField(max_length = 10)
     def __str__(self):
          return "{}".format(self.pais) #manera en que visualizamos el objeto en el admin
+
+class Dependencias(models.Model):
+    pais = models.ForeignKey(Paises, on_delete=models.CASCADE)
+    dependencia = models.CharField(max_length = 50, unique=True)
+    pertenencia = models.BooleanField(default=False)
+    def __str__(self):
+         return "{}".format(self.dependencia)

@@ -1,0 +1,76 @@
+{% extends 'barra_seleccion.html' %}
+{% block content %}
+<title>Catalogo Paises</title> <!-- Titulo de la pagina -->
+<script src="../static/javascript/js_catalogos.js"></script> <!-- Archivo que se encarga de mostrar y ocultar botones -->
+<h1 class="tit_pag_cat" id="title_cat_dep">Catálogo de dependencias</h1> <!-- Titulo del catalogo -->
+<div class="alerta_cat" id="alerta_cat_dep">
+    {% if messages %} <!-- Verificamos si hay mensajes de alertas -->
+        {% for message in messages %} <!-- Si las hay se despliegan -->
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} <!-- Los mensajes de exito se mostraran de esta manera -->
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    {{ message }} <!-- Mensaje enviado desde el servidor -->
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} <!-- Los mensajes de error se mostraran de esta manera -->
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    {{ message }} <!-- Mensaje enviado desde el servidor -->
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="formulario-cat">
+    <form method="POST">
+        {% csrf_token %} <!-- token para poder enviar formulario -->
+        <div class="seleccion" id="select-pais">
+            <select class="form-select" aria-label="Default select example" id="s_p_c" name="select_Pais"> <!-- Select para continente -->
+                <option selected>Selecciona un país</option>
+                {% for pais in paises %}
+                <option value='{{ pais.pais }}'>{{ pais.pais }}</option> <!-- Mostrar todos los paises que envió el servidor -->
+                {% endfor %}
+            </select>
+        </div>
+        <div class="seleccion" id="select-dependencia-cat">
+            <select class="form-select" aria-label="Default select example" id="s_d_c" onclick="ocultar_dep('btn_agr','btn_edit','btn_elim','s_p_c','s_d_c','inp_dep','option-pert-si','option-pert-no')" name="select_Dependencia_cat"> <!-- Select para pais -->
+                <option selected>Elige una dependencia para editar</option>
+                {% for dependencia in dependencias %}
+                    {% for pais in paises %}
+                        {% if dependencia.pais == pais %}
+                            <option value='{{dependencia.dependencia}}-{{ pais.pais }}+{{dependencia.pertenencia}}'>{{dependencia.dependencia}}</option>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="seleccion" id="div_inp_dep">
+            <input class="form-control inp_login inp-cat" type="text" id="inp_dep" placeholder="Dependencia" aria-label="default input example" name="dependencia"> <!-- Input para agregar o editar el país -->
+        </div>
+        <div class="seleccion caja-checks" id="check-dependencia">
+            <p>¿Pertenece al gobierno del estado de queretaro?</p>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="option-pert" id="option-pert-si" value="True">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Si
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="option-pert" id="option-pert-no" value="False" checked>
+                <label class="form-check-label" for="flexRadioDefault2">
+                  No
+                </label>
+            </div>
+        </div>
+        <div class="seleccion" id="btn-agr-dep">
+            <input type="submit" class="btn btn-success" id="btn_agr" name="btn_env" value="Agregar"> <!-- Select para agregar -->
+        </div>
+        <div class="seleccion" id="btn-edit-dep">
+            <input type="submit" class="btn btn-success" id="btn_edit" name="btn_env" value="Actualizar"> <!-- Select para editar -->
+        </div>
+        <div class="seleccion" id="btn-elim-dep">
+            <input type="submit" class="btn btn-danger" id="btn_elim" name="btn_env" value="Eliminar"> <!-- Select para eliminar -->
+        </div>
+    </form>
+</div>
+{% endblock %}

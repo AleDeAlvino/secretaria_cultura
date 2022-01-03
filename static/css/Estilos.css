@@ -163,7 +163,7 @@ body{
     /* left: 100%; */
 }
 
-#btn-agr{
+.btn-agr{
     left: 20%;
     width: 20%;
 }
@@ -196,4 +196,46 @@ body{
 .s_elim{
     left: 8%;
     width: 10%;
+}
+
+/* ------ catalogo_dependencias------- */
+
+#select-pais{
+    left: 3%;
+}
+
+#select-dependencia-cat{
+    left: 6%;
+}
+
+#div_inp_dep{
+    left: 9%;
+}
+
+#check-dependencia{
+    width: 15%;
+    left: 7%;
+}
+
+#btn-agr-dep{
+    width: 15%;
+    left: 8%;
+}
+
+#title_cat_dep{
+    left: 35%;
+}
+
+#alerta_cat_dep{
+    left: 0% !important;
+}
+
+#btn-edit-dep{
+    width: 10%;
+    left: 8%;
+}
+
+#btn-elim-dep{
+    width: 8%;
+    left: 6%;
 }
