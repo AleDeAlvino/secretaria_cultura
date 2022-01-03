@@ -150,26 +150,22 @@ def cat_departamentos_view(request):
                     else:
                         valor = request.POST['select_departamento_cat']
                         departamento = valor[0:valor.find('-')] #Extraemos el valor enviado dejando solamente el departamento
-                        dependencia = valor[valor.find('-')+1:]
                         if Departamentos.objects.filter(departamento=departamento).exists():
                             if request.POST['btn_env'] == 'Actualizar': #Si la opción que eligio fue Actualizar procede
-                                if Dependencias.objects.filter(dependencia=dependencia).exists(): #Verificamos si existe la dependencia que se mandó
-                                    if request.POST['departamento'] != departamento or dependencia_sel != dependencia:
-                                        departamento_editar = Departamentos.objects.get(departamento=departamento)
-                                        dependencia_rec = Dependencias.objects.get(dependencia=dependencia)
-                                        # departamento_editar.dependencia = dependencia_rec
-                                        # dependecia_editar.pais = pais_recuperado
-                                        # dependecia_editar.pertenencia = request.POST['option-pert']
-                                        # dependecia_editar.save()
-                                        messages.success(request, 'Dependencia actualizada')
-                                    else:
-                                        messages.error(request, 'No ha habido ningún cambio')
+                                departamento_editar = Departamentos.objects.get(departamento=departamento)
+                                if request.POST['departamento'] != departamento or dependencia_sel != departamento_editar.dependencia.dependencia:
+                                    dependencia_rec = Dependencias.objects.get(dependencia=dependencia_sel)
+                                    departamento_editar.dependencia = dependencia_rec
+                                    departamento_editar.departamento = request.POST['departamento']
+                                    departamento_editar.save()
+                                    messages.success(request, 'Dependencia actualizada')
                                 else:
-                                    messages.error(request, 'Esta dependencia no existe')
+                                    messages.error(request, 'No ha habido ningún cambio')
+                                
                             elif request.POST['btn_env'] == 'Eliminar': #Si la opción que eligio fue eliminar procede
                                 print('Hola2')
-                                dependencia_borrar = get_object_or_404(Dependencias,dependencia=dependencia) #Traemos el objeto a eliminar
-                                dependencia_borrar.delete()
+                                # dependencia_borrar = get_object_or_404(Dependencias,dependencia=dependencia) #Traemos el objeto a eliminar
+                                # dependencia_borrar.delete()
                                 messages.success(request, 'Dependencia eliminada')
                             else:
                                 messages.error(request, 'No existe esa opción')
