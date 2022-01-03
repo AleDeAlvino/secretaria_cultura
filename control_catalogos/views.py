@@ -30,7 +30,6 @@ def cat_paises_view(request):
                     else:
                         valor = request.POST['select_Pais_cat']
                         pais_env = valor[0:valor.find('-')] #Extraemos el valor enviado dejando solamente el país
-                        # continente_env = valor[valor.find('-')+1:]
                         if Paises.objects.filter(pais=pais_env).exists(): #Verificamos si existe el país que se mandó
                             if request.POST['btn_env'] == 'Actualizar': #Si la opción que eligio fue Actualizar procede
                                 pais_editar = Paises.objects.get(pais=pais_env)
@@ -82,28 +81,19 @@ def cat_depenencias_view(request):
                         else:
                             valor = request.POST['select_Dependencia_cat']
                             dependencia = valor[0:valor.find('-')] #Extraemos el valor enviado dejando solamente la dependencia
-                            pais = valor[valor.find('-')+1:valor.find('+')]
-                            pertenencia = valor[valor.find('+')+1:]
-                            print(pertenencia);
                             if Dependencias.objects.filter(dependencia=dependencia).exists():
                                 if request.POST['btn_env'] == 'Actualizar': #Si la opción que eligio fue Actualizar procede
-                                    if Paises.objects.filter(pais=pais).exists(): #Verificamos si existe el país que se mandó
-                                        if pertenencia == 'True' or pertenencia == 'False':
-                                            print('Hola')
-                                            if request.POST['dependencia'] != dependencia or pais_sel != pais or request.POST['option-pert'] != pertenencia:
-                                                dependecia_editar = Dependencias.objects.get(dependencia=dependencia)
-                                                dependecia_editar.dependencia = request.POST['dependencia']
-                                                pais_recuperado = Paises.objects.get(pais=pais_sel)
-                                                dependecia_editar.pais = pais_recuperado
-                                                dependecia_editar.pertenencia = request.POST['option-pert']
-                                                dependecia_editar.save()
-                                                messages.success(request, 'Dependencia actualizada')
-                                            else:
-                                                messages.error(request, 'No ha habido ningún cambio')
-                                        else:
-                                            messages.error(request, 'Solo puedes escoger Si o No')
+                                    print('Hola')
+                                    dependecia_editar = Dependencias.objects.get(dependencia=dependencia)
+                                    if request.POST['dependencia'] != dependencia or pais_sel != dependecia_editar.pais.pais or request.POST['option-pert'] != dependecia_editar.pertenencia:
+                                        dependecia_editar.dependencia = request.POST['dependencia']
+                                        pais_recuperado = Paises.objects.get(pais=pais_sel)
+                                        dependecia_editar.pais = pais_recuperado
+                                        dependecia_editar.pertenencia = request.POST['option-pert']
+                                        dependecia_editar.save()
+                                        messages.success(request, 'Dependencia actualizada')
                                     else:
-                                        messages.error(request, 'Este país no existe')
+                                        messages.error(request, 'No ha habido ningún cambio')
                                 elif request.POST['btn_env'] == 'Eliminar': #Si la opción que eligio fue eliminar procede
                                     print('Hola2')
                                     dependencia_borrar = get_object_or_404(Dependencias,dependencia=dependencia) #Traemos el objeto a eliminar
