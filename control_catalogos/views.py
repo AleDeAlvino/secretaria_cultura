@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db import IntegrityError
 # from .forms import PaisForm
-from .models import Paises, Dependencias
+from .models import Paises, Dependencias, Departamentos
 
 # Create your views here.
 def administracion_view(request):
@@ -74,7 +74,7 @@ def cat_depenencias_view(request):
                         if request.POST['btn_env'] == 'Agregar': #Si la opción que eligio fue agregar procede
                             try:
                                 pais = Paises.objects.get(pais=pais_sel)
-                                dependencia, created = Dependencias.objects.get_or_create(pais=pais, dependencia=request.POST['dependencia'], pertenencia=pertenencia) #Comando para saber si existe o no el objeto, si no existe lo crea
+                                dependencia, created = Dependencias.objects.get_or_create(pais=pais, dependencia=request.POST['dependencia'], pertenencia=request.POST['option-pert']) #Comando para saber si existe o no el objeto, si no existe lo crea
                                 if created:
                                     dependencia.save() #Se guarda el nuevo objeto
                                     messages.success(request, 'Se agregó la dependencia correctamente')
@@ -125,3 +125,60 @@ def cat_depenencias_view(request):
         else:
             messages.error(request, 'El campo Dependencia está vacío')
     return render(request, 'catalogo_dependencias.html', {'paises':paises, 'dependencias':dependencias})
+
+
+def cat_departamentos_view(request):
+    #Vista para agregar, editar y eliminar departamentos del catalogo departamentos
+    dependencias = Dependencias.objects.all().order_by('dependencia') #Traemos todos las dependencias de la bd para mostrarlos en el select
+    departamentos = Departamentos.objects.all().order_by('departamento') #Traemos todos las departamentos de la bd para mostrarlos en el select
+    if request.method == 'POST': #Si el formulario a sido mandado por POST empieza el proceso
+        if request.POST['departamento'] != '' : #Nos aseguramos que el campo departamento no esté vacio
+            dependencia_sel = request.POST['select_Dependencia'] #Traemos el valor de dependencia
+            if dependencia_sel != 'Selecciona una Dependencia': #Si es diferente de la opción default procede
+                if Dependencias.objects.filter(dependencia=dependencia_sel).exists(): #Nos aseguramos que solo haya escogido alguna opción del select
+                    if request.POST['btn_env'] == 'Agregar': #Si la opción que eligio fue agregar procede
+                        try:
+                            dependencia = Dependencias.objects.get(dependencia=dependencia_sel)
+                            departamento, created = Departamentos.objects.get_or_create(dependencia=dependencia, departamento=request.POST['departamento']) #Comando para saber si existe o no el objeto, si no existe lo crea
+                            if created:
+                                departamento.save() #Se guarda el nuevo objeto
+                                messages.success(request, 'Se agregó el departamento correctamente')
+                            else:
+                                messages.error(request, 'Ya existe el departamento ' + request.POST['departamento'])
+                        except IntegrityError:
+                            messages.error(request, 'Ya existe el departamento')
+                    else:
+                        valor = request.POST['select_departamento_cat']
+                        departamento = valor[0:valor.find('-')] #Extraemos el valor enviado dejando solamente el departamento
+                        dependencia = valor[valor.find('-')+1:]
+                        if Departamentos.objects.filter(departamento=departamento).exists():
+                            if request.POST['btn_env'] == 'Actualizar': #Si la opción que eligio fue Actualizar procede
+                                if Dependencias.objects.filter(dependencia=dependencia).exists(): #Verificamos si existe la dependencia que se mandó
+                                    if request.POST['departamento'] != departamento or dependencia_sel != dependencia:
+                                        departamento_editar = Departamentos.objects.get(departamento=departamento)
+                                        dependencia_rec = Dependencias.objects.get(dependencia=dependencia)
+                                        # departamento_editar.dependencia = dependencia_rec
+                                        # dependecia_editar.pais = pais_recuperado
+                                        # dependecia_editar.pertenencia = request.POST['option-pert']
+                                        # dependecia_editar.save()
+                                        messages.success(request, 'Dependencia actualizada')
+                                    else:
+                                        messages.error(request, 'No ha habido ningún cambio')
+                                else:
+                                    messages.error(request, 'Esta dependencia no existe')
+                            elif request.POST['btn_env'] == 'Eliminar': #Si la opción que eligio fue eliminar procede
+                                print('Hola2')
+                                dependencia_borrar = get_object_or_404(Dependencias,dependencia=dependencia) #Traemos el objeto a eliminar
+                                dependencia_borrar.delete()
+                                messages.success(request, 'Dependencia eliminada')
+                            else:
+                                messages.error(request, 'No existe esa opción')
+                        else:
+                            messages.error(request, 'El departamento no existe')
+                else:
+                    messages.error(request, 'No existe esa dependencia')
+            else:
+                messages.error(request, 'No has seleccionado ninguna Dependencia')
+        else:
+            messages.error(request, 'El campo Departamento está vacío')
+    return render(request, 'catalogo_departamentos.html', {'dependencias':dependencias, 'departamentos':departamentos})

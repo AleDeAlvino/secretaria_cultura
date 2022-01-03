@@ -1,0 +1,61 @@
+{% extends 'barra_seleccion.html' %}
+{% block content %}
+<title>Catalogo Departamentos</title> <!-- Titulo de la pagina -->
+<script src="../static/javascript/js_catalogos.js"></script> <!-- Archivo que se encarga de mostrar y ocultar botones -->
+<h1 class="tit_pag_cat" id="title_cat_dep">Catálogo de Departamentos</h1> <!-- Titulo del catalogo -->
+<div class="alerta_cat" id="alerta_cat_dep">
+    {% if messages %} <!-- Verificamos si hay mensajes de alertas -->
+        {% for message in messages %} <!-- Si las hay se despliegan -->
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} <!-- Los mensajes de exito se mostraran de esta manera -->
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    {{ message }} <!-- Mensaje enviado desde el servidor -->
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} <!-- Los mensajes de error se mostraran de esta manera -->
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    {{ message }} <!-- Mensaje enviado desde el servidor -->
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="formulario-cat">
+    <form method="POST">
+        {% csrf_token %} <!-- token para poder enviar formulario -->
+        <div class="seleccion" id="select-dependencia">
+            <select class="form-select" aria-label="Default select example" id="s_depe_c" name="select_Dependencia"> <!-- Select para Dependencia -->
+                <option selected>Selecciona una Dependencia</option>
+                {% for dependencia in dependencias %}
+                <option value='{{ dependencia.dependencia }}'>{{ dependencia.dependencia }}</option> <!-- Mostrar todas las dependencias que envió el servidor -->
+                {% endfor %}
+            </select>
+        </div>
+        <div class="seleccion" id="select-departamento-cat">
+            <select class="form-select" aria-label="Default select example" id="s_depa_c" onclick="ocultar('btn_agr','btn_edit','btn_elim','s_depe_c','s_depa_c','inp_pais')" name="select_departamento_cat"> <!-- Select para departamento -->
+                <option selected>Elige un departamento para editar</option>
+                {% for departamento in departamentos %}
+                    {% for dependencia in dependencias %}
+                        {% if departamento.dependencia == dependencia %}
+                            <option value='{{ departamento.departamento }}-{{ dependencia.dependencia }}'>{{ departamento.departamento }}</option> <!-- Mostrar todos los departamentos que envió el servidor -->
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+              </select>
+        </div>
+        <div class="seleccion" id="div_inp_cat">
+            <input class="form-control inp_login inp-cat" type="text" id="inp_pais" placeholder="Departamento" aria-label="default input example" name="departamento"> <!-- Input para agregar o editar el departamento -->
+        </div>
+        <div class="seleccion btn-agr" id="btn-agr">
+            <input type="submit" class="btn btn-success" id="btn_agr" name="btn_env" value="Agregar"> <!-- Select para agregar -->
+        </div>
+        <div class="seleccion s_edit" id="btn-edit">
+            <input type="submit" class="btn btn-success" id="btn_edit" name="btn_env" value="Actualizar"> <!-- Select para editar -->
+        </div>
+        <div class="seleccion s_elim" id="btn-elim">
+            <input type="submit" class="btn btn-danger" id="btn_elim" name="btn_env" value="Eliminar"> <!-- Select para eliminar -->
+        </div>
+    </form>
+</div>
+{% endblock %}

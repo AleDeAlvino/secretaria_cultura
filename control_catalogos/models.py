@@ -15,3 +15,9 @@ class Dependencias(models.Model):
     pertenencia = models.BooleanField(default=False)
     def __str__(self):
          return "{}".format(self.dependencia)
+
+class Departamentos(models.Model):
+    dependencia = models.ForeignKey(Dependencias, on_delete=models.CASCADE)
+    departamento = models.CharField(max_length = 80, unique=True)
+    def __str__(self):
+         return "{}".format(self.departamento)

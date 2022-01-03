@@ -239,3 +239,13 @@ body{
     width: 8%;
     left: 6%;
 }
+
+/* ------ catalogo_departamentos------- */
+
+#select-dependencia{
+    left: 10%;
+}
+
+#select-departamento-cat{
+    left: 15%;
+}
