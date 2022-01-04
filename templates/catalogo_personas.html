@@ -1,8 +1,8 @@
 {% extends 'barra_seleccion.html' %}
 {% block content %}
-<title>Catalogo Departamentos</title> <!-- Titulo de la pagina -->
+<title>Catalogo Personas</title> <!-- Titulo de la pagina -->
 <script src="../static/javascript/js_catalogos.js"></script> <!-- Archivo que se encarga de mostrar y ocultar botones -->
-<h1 class="tit_pag_cat" id="title_cat_depar">Catálogo de Departamentos</h1> <!-- Titulo del catalogo -->
+<h1 class="tit_pag_cat" id="title_cat_depar">Catálogo de Personas</h1> <!-- Titulo del catalogo -->
 <div class="alerta_cat" id="alerta_cat_depar">
     {% if messages %} <!-- Verificamos si hay mensajes de alertas -->
         {% for message in messages %} <!-- Si las hay se despliegan -->
@@ -25,27 +25,29 @@
     <form method="POST">
         {% csrf_token %} <!-- token para poder enviar formulario -->
         <div class="seleccion" id="select-dependencia">
-            <select class="form-select" aria-label="Default select example" id="s_depe_c" name="select_Dependencia"> <!-- Select para Dependencia -->
-                <option selected>Selecciona una Dependencia</option>
-                {% for dependencia in dependencias %}
-                <option value='{{ dependencia.dependencia }}'>{{ dependencia.dependencia }}</option> <!-- Mostrar todas las dependencias que envió el servidor -->
+            <select class="form-select" aria-label="Default select example" id="s_depar_c" name="select_Departamento"> <!-- Select para Departamento -->
+                <option selected>Selecciona un Departamento</option>
+                {% for departamento in departamentos %}
+                <option value='{{ departamento.departamento }}'>{{ departamento.departamento }}</option> <!-- Mostrar todas los departamentos que envió el servidor -->
                 {% endfor %}
             </select>
         </div>
         <div class="seleccion" id="select-departamento-cat">
-            <select class="form-select" aria-label="Default select example" id="s_depa_c" onclick="ocultar('btn_agr','btn_edit','btn_elim','s_depe_c','s_depa_c','inp_departamento')" name="select_departamento_cat"> <!-- Select para departamento -->
-                <option selected>Elige un departamento para editar</option>
-                {% for departamento in departamentos %}
-                    {% for dependencia in dependencias %}
-                        {% if departamento.dependencia == dependencia %}
-                            <option value='{{ departamento.departamento }}-{{ dependencia.dependencia }}'>{{ departamento.departamento }}</option> <!-- Mostrar todos los departamentos que envió el servidor -->
+            <select class="form-select" aria-label="Default select example" id="s_per_c" onclick="ocultar('btn_agr','btn_edit','btn_elim','s_depar_c','s_per_c','inp_persona_nom', 'inp_persona_ape')" name="select_departamento_cat"> <!-- Select para persona -->
+                <option selected>Elige una persona para editar</option>
+                {% for persona in personas %}
+                    {% for departamento in departamentos %}
+                        {% if persona.departamento == departamento %}
+                            <option value='{{persona.nombres}}-{{persona.apellidos}}+{{ departamento.departamento }}'>{{persona.nombres}} {{persona.apellidos}}</option> <!-- Mostrar todos las personas que envió el servidor -->
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
               </select>
         </div>
         <div class="seleccion" id="div_inp_cat">
-            <input class="form-control inp_login inp-cat" type="text" id="inp_departamento" placeholder="Departamento" aria-label="default input example" name="departamento"> <!-- Input para agregar o editar el departamento -->
+            <input class="form-control inp_login inp-cat" type="text" id="inp_persona_nom" placeholder="Nombres" aria-label="default input example" name="nombres"> <!-- Input para agregar o editar los nombres -->
+            <input class="form-control inp_login inp-cat inp_ex" type="text" id="inp_persona_ape" placeholder="Apellidos" aria-label="default input example" name="apellidos"> <!-- Input para agregar o editar los apellidos -->
+            <input class="form-control inp_login inp-cat inp_ex" type="text" id="inp_persona_tit" placeholder="Título" aria-label="default input example" name="titulo"> <!-- Input para agregar o editar los titulos -->
         </div>
         <div class="seleccion btn-agr" id="btn-agr">
             <input type="submit" class="btn btn-success" id="btn_agr" name="btn_env" value="Agregar"> <!-- Select para agregar -->

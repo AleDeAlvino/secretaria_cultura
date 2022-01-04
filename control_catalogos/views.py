@@ -162,3 +162,11 @@ def cat_departamentos_view(request):
         else:
             messages.error(request, 'El campo Departamento está vacío')
     return render(request, 'catalogo_departamentos.html', {'dependencias':dependencias, 'departamentos':departamentos})
+
+
+def cat_personas_view(request):
+    #Vista para agregar, editar y eliminar departamentos del catalogo departamentos
+    dependencias = Dependencias.objects.all().order_by('dependencia') #Traemos todos las dependencias de la bd para mostrarlos en el select
+    departamentos = Departamentos.objects.all().order_by('departamento') #Traemos todos las departamentos de la bd para mostrarlos en el select
+    
+    return render(request, 'catalogo_personas.html', {'dependencias':dependencias, 'departamentos':departamentos})

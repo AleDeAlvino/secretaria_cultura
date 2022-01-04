@@ -7,4 +7,5 @@ urlpatterns = [
     path('cat_paises/', views.cat_paises_view, name="cat_paises_view"), #Url para acceder a la vista cat_paises_view
     path('cat_dependencias/', views.cat_depenencias_view, name="cat_depenencias_view"), #Url para acceder a la vista cat_depenencias_view
     path('cat_departamentos/', views.cat_departamentos_view, name="cat_departamentos_view"), #Url para acceder a la vista cat_departamentos_view
+    path('cat_personas/', views.cat_personas_view, name="cat_personas_view"), #Url para acceder a la vista cat_personas_view
 ]

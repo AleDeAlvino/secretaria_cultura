@@ -21,3 +21,11 @@ class Departamentos(models.Model):
     departamento = models.CharField(max_length = 80, unique=True)
     def __str__(self):
          return "{}".format(self.departamento)
+
+class Personas(models.Model):
+    departamento = models.ForeignKey(Departamentos, on_delete=models.CASCADE)
+    nombres = models.CharField(max_length = 50)
+    apellidos = models.CharField(max_length = 50)
+    titulo = models.CharField(max_length = 50)
+    def __str__(self):
+         return "{}".format(self.nombres)
