@@ -4,7 +4,7 @@ function ocultar(id_btn_agr, id_btn_edit, id_btn_elim, id_primer_select, id_segu
     var segundo_select = document.getElementById(id_segundo_select);
     var bot_edit = document.getElementById(id_btn_edit); //Boton editar
     var bot_elim = document.getElementById(id_btn_elim); //Boton eliminar
-    var input = document.getElementById(id_input); //Input país
+    var input = document.getElementById(id_input); //Input
     
     if(segundo_select.value !=segundo_select.options[0].value){
         //Si se quiere editar o eliminar:
@@ -23,6 +23,7 @@ function ocultar(id_btn_agr, id_btn_edit, id_btn_elim, id_primer_select, id_segu
         bot_agr.style.display = "inline"; //Se desbloquea el boton de agregar
         bot_edit.style.display = "none"; //Se bloquea el boton de editar
         bot_elim.style.display = "none";//Se bloquea el boton de eliminar
+        primer_select.value = primer_select.options[0].value;
         input.value = ""; //Se deja en blanco el input
     }
 }
@@ -60,6 +61,47 @@ function ocultar_dep(id_btn_agr, id_btn_edit, id_btn_elim, id_primer_select, id_
         bot_agr.style.display = "inline"; //Se desbloquea el boton de agregar
         bot_edit.style.display = "none"; //Se bloquea el boton de editar
         bot_elim.style.display = "none";//Se bloquea el boton de eliminar
+        primer_select.value = primer_select.options[0].value;
         input.value = ""; //Se deja en blanco el input
+    }
+}
+
+function ocultar_per(id_btn_agr, id_btn_edit, id_btn_elim, id_primer_select, id_segundo_select, id_input1, id_input2, id_input3){
+    var bot_agr = document.getElementById(id_btn_agr); //Boton agregar
+    var primer_select = document.getElementById(id_primer_select);
+    var segundo_select = document.getElementById(id_segundo_select);
+    var bot_edit = document.getElementById(id_btn_edit); //Boton editar
+    var bot_elim = document.getElementById(id_btn_elim); //Boton eliminar
+    var input1 = document.getElementById(id_input1); //input1
+    var input2 = document.getElementById(id_input2); //input1
+    var input3 = document.getElementById(id_input3); //input1
+    
+    if(segundo_select.value !=segundo_select.options[0].value){
+        //Si se quiere editar o eliminar:
+        bot_agr.style.display = "none"; //Se bloquea el boton de agregar
+        bot_edit.style.display = "inline"; //Se desbloquea el boton de editar
+        bot_elim.style.display = "inline"; //Se desbloquea el boton de eliminar
+        valor = segundo_select.value
+        guion = valor.indexOf('-'); //Se identifica donde esta el guion
+        mas = valor.indexOf('+'); //Se identifica donde esta el mas
+        diagonal = valor.indexOf('/'); //Se identifica donde esta la diagonal
+        primer_valor = valor.slice(0,guion);
+        segundo_valor = valor.slice(guion+1,mas);
+        tercer_valor=valor.slice(mas+1,diagonal);
+        cuarto_valor=valor.slice(diagonal+1);
+        input1.value = primer_valor;
+        input2.value = segundo_valor;
+        input3.value = tercer_valor;
+        primer_select.value = cuarto_valor; //Se selecciona el segundo_valor correspondiente al país que ya había sido almacenado
+    }
+    else{
+        //Si se desea agregar:
+        bot_agr.style.display = "inline"; //Se desbloquea el boton de agregar
+        bot_edit.style.display = "none"; //Se bloquea el boton de editar
+        bot_elim.style.display = "none";//Se bloquea el boton de eliminar
+        primer_select.value = primer_select.options[0].value;
+        input1.value = ""; //Se deja en blanco el input
+        input2.value = "";
+        input3.value = "";
     }
 }

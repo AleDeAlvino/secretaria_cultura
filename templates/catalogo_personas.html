@@ -33,12 +33,12 @@
             </select>
         </div>
         <div class="seleccion" id="select-departamento-cat">
-            <select class="form-select" aria-label="Default select example" id="s_per_c" onclick="ocultar('btn_agr','btn_edit','btn_elim','s_depar_c','s_per_c','inp_persona_nom', 'inp_persona_ape')" name="select_departamento_cat"> <!-- Select para persona -->
+            <select class="form-select" aria-label="Default select example" id="s_per_c" onclick="ocultar_per('btn_agr','btn_edit','btn_elim','s_depar_c','s_per_c','inp_persona_nom', 'inp_persona_ape', 'inp_persona_tit')" name="select_persona_cat"> <!-- Select para persona -->
                 <option selected>Elige una persona para editar</option>
                 {% for persona in personas %}
                     {% for departamento in departamentos %}
                         {% if persona.departamento == departamento %}
-                            <option value='{{persona.nombres}}-{{persona.apellidos}}+{{ departamento.departamento }}'>{{persona.nombres}} {{persona.apellidos}}</option> <!-- Mostrar todos las personas que envió el servidor -->
+                            <option value='{{persona.nombres}}-{{persona.apellidos}}+{{ persona.titulo }}/{{departamento.departamento}}'>{{persona.nombres}} {{persona.apellidos}}</option> <!-- Mostrar todos las personas que envió el servidor -->
                         {% endif %}
                     {% endfor %}
                 {% endfor %}

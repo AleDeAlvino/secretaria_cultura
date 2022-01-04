@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db import IntegrityError
 # from .forms import PaisForm
-from .models import Paises, Dependencias, Departamentos
+from .models import Paises, Dependencias, Departamentos, Personas
 
 # Create your views here.
 def administracion_view(request):
@@ -165,8 +165,66 @@ def cat_departamentos_view(request):
 
 
 def cat_personas_view(request):
-    #Vista para agregar, editar y eliminar departamentos del catalogo departamentos
-    dependencias = Dependencias.objects.all().order_by('dependencia') #Traemos todos las dependencias de la bd para mostrarlos en el select
+    #Vista para agregar, editar y eliminar personas del catalogo personas
     departamentos = Departamentos.objects.all().order_by('departamento') #Traemos todos las departamentos de la bd para mostrarlos en el select
-    
-    return render(request, 'catalogo_personas.html', {'dependencias':dependencias, 'departamentos':departamentos})
+    personas = Personas.objects.all().order_by('nombres') #Traemos todos las personas de la bd para mostrarlos en el select
+    if request.method == 'POST': #Si el formulario a sido mandado por POST empieza el proceso
+        if request.POST['nombres'] != '' : #Nos aseguramos que el campo nombres no esté vacio
+            if request.POST['apellidos'] != '' : #Nos aseguramos que el campo apellidos no esté vacio
+                if request.POST['titulo'] != '' : #Nos aseguramos que el campo titulo no esté vacio
+                    departamento_sel = request.POST['select_Departamento'] #Traemos el valor de Departamento
+                    print(departamento_sel)
+                    if departamento_sel != 'Selecciona una Departamento': #Si es diferente de la opción default procede
+                        if Departamentos.objects.filter(departamento=departamento_sel).exists(): #Nos aseguramos que solo haya escogido alguna opción del select
+                            if request.POST['btn_env'] == 'Agregar': #Si la opción que eligio fue agregar procede
+                                try:
+                                    departamento = Departamentos.objects.get(departamento=departamento_sel)
+                                    persona, created = Personas.objects.get_or_create(departamento=departamento, nombres=request.POST['nombres'], apellidos=request.POST['apellidos'], titulo=request.POST['titulo']) #Comando para saber si existe o no el objeto, si no existe lo crea
+                                    if created:
+                                        persona.save() #Se guarda el nuevo objeto
+                                        messages.success(request, 'Se agregó a la persona correctamente')
+                                    else:
+                                        messages.error(request, 'Ya existe la persona ' + request.POST['nombres'] + ' ' + request.POST['apellidos'])
+                                except IntegrityError:
+                                    messages.error(request, 'Ya existe la persona')
+                            else:
+                                valor = request.POST['select_persona_cat']
+                                persona_nombre = valor[0:valor.find('-')] #Extraemos el valor enviado dejando solamente los nombres de las personas
+                                persona_apellido = valor[valor.find('-')+1:valor.find('+')] #Extraemos el valor enviado dejando solamente los apellidos de las personas
+                                persona_titulo = valor[valor.find('+')+1:valor.find('/')] #Extraemos el valor enviado dejando solamente los apellidos de las personas
+                                print(persona_nombre)
+                                print(persona_apellido)
+                                print(persona_titulo)
+                                if Personas.objects.filter(nombres=persona_nombre, apellidos=persona_apellido, titulo=persona_titulo).exists():
+                                    persona_editar = Personas.objects.get(nombres=persona_nombre, apellidos=persona_apellido, titulo=persona_titulo)
+                                    if request.POST['btn_env'] == 'Actualizar': #Si la opción que eligio fue Actualizar procede
+                                        if request.POST['nombres'] != persona_editar.nombres or request.POST['apellidos'] != persona_editar.apellidos or request.POST['titulo'] != persona_editar.titulo or departamento_sel != persona_editar.departamento.departamento:
+                                            departamento_rec = Departamentos.objects.get(departamento=departamento_sel)
+                                            persona_editar.departamento = departamento_rec
+                                            persona_editar.nombres = request.POST['nombres']
+                                            persona_editar.apellidos = request.POST['apellidos']
+                                            persona_editar.titulo = request.POST['titulo']
+                                            persona_editar.save()
+                                            messages.success(request, 'Persona actualizada')
+                                        else:
+                                            messages.error(request, 'No ha habido ningún cambio')
+                                    elif request.POST['btn_env'] == 'Eliminar': #Si la opción que eligio fue eliminar procede
+                                        print('Hola2')
+                                        # departamento_borrar = get_object_or_404(Departamentos,departamento=departamento) #Traemos el objeto a eliminar
+                                        # departamento_borrar.delete()
+                                        messages.success(request, 'Persona eliminado')
+                                    else:
+                                        messages.error(request, 'No existe esa opción')
+                                else:
+                                    messages.error(request, 'La persona no existe')
+                        else:
+                            messages.error(request, 'No existe este Departamento')
+                    else:
+                        messages.error(request, 'No has seleccionado ningun departamento')
+                else:
+                    messages.error(request, 'El campo Titulo está vacío')
+            else:
+                messages.error(request, 'El campo Apellidos está vacío')
+        else:
+            messages.error(request, 'El campo Nombres está vacío')
+    return render(request, 'catalogo_personas.html', {'departamentos':departamentos, 'personas':personas})
