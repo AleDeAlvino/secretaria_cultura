@@ -192,14 +192,11 @@ def cat_personas_view(request):
                                 persona_nombre = valor[0:valor.find('-')] #Extraemos el valor enviado dejando solamente los nombres de las personas
                                 persona_apellido = valor[valor.find('-')+1:valor.find('+')] #Extraemos el valor enviado dejando solamente los apellidos de las personas
                                 persona_titulo = valor[valor.find('+')+1:valor.find('/')] #Extraemos el valor enviado dejando solamente los apellidos de las personas
-                                print(persona_nombre)
-                                print(persona_apellido)
-                                print(persona_titulo)
-                                if Personas.objects.filter(nombres=persona_nombre, apellidos=persona_apellido, titulo=persona_titulo).exists():
-                                    persona_editar = Personas.objects.get(nombres=persona_nombre, apellidos=persona_apellido, titulo=persona_titulo)
+                                departamento_rec = Departamentos.objects.get(departamento=departamento_sel)
+                                if Personas.objects.filter(nombres=persona_nombre, apellidos=persona_apellido, titulo=persona_titulo, departamento=departamento_rec).exists():
+                                    persona_editar = Personas.objects.get(nombres=persona_nombre, apellidos=persona_apellido, titulo=persona_titulo, departamento=departamento_rec)
                                     if request.POST['btn_env'] == 'Actualizar': #Si la opción que eligio fue Actualizar procede
                                         if request.POST['nombres'] != persona_editar.nombres or request.POST['apellidos'] != persona_editar.apellidos or request.POST['titulo'] != persona_editar.titulo or departamento_sel != persona_editar.departamento.departamento:
-                                            departamento_rec = Departamentos.objects.get(departamento=departamento_sel)
                                             persona_editar.departamento = departamento_rec
                                             persona_editar.nombres = request.POST['nombres']
                                             persona_editar.apellidos = request.POST['apellidos']
@@ -210,9 +207,9 @@ def cat_personas_view(request):
                                             messages.error(request, 'No ha habido ningún cambio')
                                     elif request.POST['btn_env'] == 'Eliminar': #Si la opción que eligio fue eliminar procede
                                         print('Hola2')
-                                        # departamento_borrar = get_object_or_404(Departamentos,departamento=departamento) #Traemos el objeto a eliminar
-                                        # departamento_borrar.delete()
-                                        messages.success(request, 'Persona eliminado')
+                                        persona_borrar = get_object_or_404(Personas,nombres=persona_nombre, apellidos=persona_apellido, titulo=persona_titulo, departamento=departamento_rec) #Traemos el objeto a eliminar
+                                        persona_borrar.delete()
+                                        messages.success(request, 'Persona eliminada')
                                     else:
                                         messages.error(request, 'No existe esa opción')
                                 else:
