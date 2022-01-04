@@ -249,3 +249,11 @@ body{
 #select-departamento-cat{
     left: 15%;
 }
+
+#title_cat_depar{
+    left: 32%;
+}
+
+#alerta_cat_depar{
+    left: -5%!important;
+}

@@ -83,7 +83,6 @@ def cat_depenencias_view(request):
                             dependencia = valor[0:valor.find('-')] #Extraemos el valor enviado dejando solamente la dependencia
                             if Dependencias.objects.filter(dependencia=dependencia).exists():
                                 if request.POST['btn_env'] == 'Actualizar': #Si la opción que eligio fue Actualizar procede
-                                    print('Hola')
                                     dependecia_editar = Dependencias.objects.get(dependencia=dependencia)
                                     if request.POST['dependencia'] != dependencia or pais_sel != dependecia_editar.pais.pais or request.POST['option-pert'] != dependecia_editar.pertenencia:
                                         dependecia_editar.dependencia = request.POST['dependencia']
@@ -95,7 +94,6 @@ def cat_depenencias_view(request):
                                     else:
                                         messages.error(request, 'No ha habido ningún cambio')
                                 elif request.POST['btn_env'] == 'Eliminar': #Si la opción que eligio fue eliminar procede
-                                    print('Hola2')
                                     dependencia_borrar = get_object_or_404(Dependencias,dependencia=dependencia) #Traemos el objeto a eliminar
                                     dependencia_borrar.delete()
                                     messages.success(request, 'Dependencia eliminada')
@@ -145,15 +143,14 @@ def cat_departamentos_view(request):
                                     departamento_editar.dependencia = dependencia_rec
                                     departamento_editar.departamento = request.POST['departamento']
                                     departamento_editar.save()
-                                    messages.success(request, 'Dependencia actualizada')
+                                    messages.success(request, 'Departamento actualizado')
                                 else:
                                     messages.error(request, 'No ha habido ningún cambio')
-                                
                             elif request.POST['btn_env'] == 'Eliminar': #Si la opción que eligio fue eliminar procede
                                 print('Hola2')
-                                # dependencia_borrar = get_object_or_404(Dependencias,dependencia=dependencia) #Traemos el objeto a eliminar
-                                # dependencia_borrar.delete()
-                                messages.success(request, 'Dependencia eliminada')
+                                departamento_borrar = get_object_or_404(Departamentos,departamento=departamento) #Traemos el objeto a eliminar
+                                departamento_borrar.delete()
+                                messages.success(request, 'Departamento eliminado')
                             else:
                                 messages.error(request, 'No existe esa opción')
                         else:
