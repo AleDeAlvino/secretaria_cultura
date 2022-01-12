@@ -2,8 +2,8 @@
 {% block content %}
 <title>Catalogo Personas</title> <!-- Titulo de la pagina -->
 <script src="../static/javascript/js_catalogos.js"></script> <!-- Archivo que se encarga de mostrar y ocultar botones -->
-<h1 class="tit_pag_cat" id="title_cat_depar">Catálogo de Personas</h1> <!-- Titulo del catalogo -->
-<div class="alerta_cat" id="alerta_cat_depar">
+<h1 class="tit_pag_cat" id="title_cat_per">Catálogo de Personas</h1> <!-- Titulo del catalogo -->
+<div class="alerta_cat" id="alerta_cat_per">
     {% if messages %} <!-- Verificamos si hay mensajes de alertas -->
         {% for message in messages %} <!-- Si las hay se despliegan -->
             {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} <!-- Los mensajes de exito se mostraran de esta manera -->

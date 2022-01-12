@@ -261,3 +261,13 @@ body{
 .inp_ex{
     margin-top: 2%;
 }
+
+/* ------ catalogo_personas------- */
+
+#title_cat_per{
+    left: 36.5%;
+}
+
+#alerta_cat_per{
+    left: 3.5%!important;
+}
