@@ -58,6 +58,8 @@ def seleccion_depar_dep_view(request):
         return Response(lista_departamento)
     return Response({})
 
+# ----------------------------------------------------------------------------------------------------------------------------------
+
 def cat_paises_view(request):
     #Vista para agregar, editar y eliminar paises del catalogo de paises
     paises = Paises.objects.all().order_by('pais') #Traemos todos los paises de la bd para mostrarlos en el select
@@ -114,61 +116,56 @@ def cat_depenencias_view(request):
     if request.method == 'POST': #Si el formulario a sido mandado por POST empieza el proceso
         if request.POST['dependencia'] != '' : #Nos aseguramos que el campo dependencia no esté vacio
             if request.POST['option-pert'] == 'True' or request.POST['option-pert'] == 'False':
-                pais_sel = request.POST['select_Pais'] #Traemos el valor de país
-                if pais_sel != 'Selecciona un país': #Si es diferente de la opción default procede
-                    if Paises.objects.filter(pais=pais_sel).exists(): #Nos aseguramos que solo haya escogido alguna opción del select
-                        if request.POST['btn_env'] == 'Agregar': #Si la opción que eligio fue agregar procede
-                                    try:
-                                        pais = Paises.objects.get(pais=pais_sel)
-                                        dependencia, created = Dependencias.objects.get_or_create(pais=pais, dependencia=request.POST['dependencia'], pertenencia=request.POST['option-pert']) #Comando para saber si existe o no el objeto, si no existe lo crea
-                                        if created:
-                                            dependencia.save() #Se guarda el nuevo objeto
-                                            messages.success(request, 'Se agregó la dependencia correctamente')
-                                        else:
-                                            messages.error(request, 'Ya existe la dependencia ' + request.POST['dependencia'])
-                                    except IntegrityError:
-                                        messages.error(request, 'Ya existe la dependencia')
-                                
-                        else:
-                            valor = request.POST['select_Dependencia_cat']
-                            dependencia = valor[0:valor.find('-')] #Extraemos el valor enviado dejando solamente la dependencia
-                            if Dependencias.objects.filter(dependencia=dependencia).exists():
-                                if request.POST['btn_env'] == 'Actualizar': #Si la opción que eligio fue Actualizar procede
-                                    dependencia_editar = Dependencias.objects.get(dependencia=dependencia)
-                                    if request.POST['option-pert'] == 'True':
-                                        pert = True
-                                    else:
-                                        pert = False
-                                    if request.POST['dependencia'] != dependencia_editar.dependencia or pert != dependencia_editar.pertenencia:
-                                        if request.POST['dependencia'] != dependencia_editar.dependencia:
-                                            print('soy la dep ', request.POST['dependencia'])
-                                            print('soy la dep2 ', dependencia_editar.dependencia)
-                                        else:
-                                            print('soy la per', request.POST['option-pert'])
-                                            print('soy laper2', dependencia_editar.pertenencia)
-
-                                        if True != 'True' :
-                                            print('Hola')
-
-                                        dependencia_editar.dependencia = request.POST['dependencia']
-                                        dependencia_editar.pais = dependencia_editar.pais
-                                        dependencia_editar.pertenencia = request.POST['option-pert']
-                                        dependencia_editar.save()
-                                        messages.success(request, 'Dependencia actualizada')
-                                    else:
-                                        messages.error(request, 'No ha habido ningún cambio')
-                                elif request.POST['btn_env'] == 'Eliminar': #Si la opción que eligio fue eliminar procede
-                                    dependencia_borrar = get_object_or_404(Dependencias,dependencia=dependencia) #Traemos el objeto a eliminar
-                                    dependencia_borrar.delete()
-                                    messages.success(request, 'Dependencia eliminada')
+                if request.POST['btn_env'] == 'Agregar': #Si la opción que eligio fue agregar procede
+                    pais_sel = request.POST['select_Pais'] #Traemos el valor de país
+                    if pais_sel != 'Selecciona un país': #Si es diferente de la opción default procede
+                        if Paises.objects.filter(pais=pais_sel).exists(): #Nos aseguramos que solo haya escogido alguna opción del select
+                            try:
+                                pais = Paises.objects.get(pais=pais_sel)
+                                dependencia, created = Dependencias.objects.get_or_create(pais=pais, dependencia=request.POST['dependencia'], pertenencia=request.POST['option-pert']) #Comando para saber si existe o no el objeto, si no existe lo crea
+                                if created:
+                                    dependencia.save() #Se guarda el nuevo objeto
+                                    messages.success(request, 'Se agregó la dependencia correctamente')
                                 else:
-                                    messages.error(request, 'No existe esa opción')
-                            else:
-                                messages.error(request, 'La dependencia no existe')
+                                    messages.error(request, 'Ya existe la dependencia ' + request.POST['dependencia'])
+                            except IntegrityError:
+                                messages.error(request, 'Ya existe la dependencia')
+                        else:
+                            messages.error(request, 'No existe ese país')
                     else:
-                        messages.error(request, 'No existe ese país')
+                        messages.error(request, 'No has seleccionado ningun país')
                 else:
-                    messages.error(request, 'No has seleccionado ningun país')
+                    valor = request.POST['select_Dependencia_cat']
+                    dependencia = valor[0:valor.find('-')] #Extraemos el valor enviado dejando solamente la dependencia
+                    pais = valor[valor.find('-')+1:valor.find('+')] #Extraemos el valor enviado dejando solamente la país
+                    pertenencia = valor[valor.find('+')+1:len(valor)] #Extraemos el valor enviado dejando solamente la país
+                    if Paises.objects.filter(pais=pais).exists():
+                        paiss = Paises.objects.get(pais=pais)
+                        if Dependencias.objects.filter(dependencia=dependencia,pais=paiss,pertenencia=pertenencia).exists():
+                            if request.POST['btn_env'] == 'Actualizar': #Si la opción que eligio fue Actualizar procede
+                                dependencia_editar = Dependencias.objects.get(dependencia=dependencia,pais=paiss,pertenencia=pertenencia)
+                                if request.POST['option-pert'] == 'True':
+                                    pert = True
+                                else:
+                                    pert = False
+                                if request.POST['dependencia'] != dependencia_editar.dependencia or pert != dependencia_editar.pertenencia:
+                                    dependencia_editar.dependencia = request.POST['dependencia']
+                                    dependencia_editar.pais = dependencia_editar.pais
+                                    dependencia_editar.pertenencia = request.POST['option-pert']
+                                    dependencia_editar.save()
+                                    messages.success(request, 'Dependencia actualizada')
+                                else:
+                                    messages.error(request, 'No ha habido ningún cambio')
+                            elif request.POST['btn_env'] == 'Eliminar': #Si la opción que eligio fue eliminar procede
+                                dependencia_borrar = get_object_or_404(Dependencias,dependencia=dependencia,pais=paiss,pertenencia=pertenencia) #Traemos el objeto a eliminar
+                                dependencia_borrar.delete()
+                                messages.success(request, 'Dependencia eliminada')
+                            else:
+                                messages.error(request, 'No existe esa opción')
+                        else:
+                            messages.error(request, 'La dependencia no existe')
+                    else:
+                        messages.error(request, 'Este país no existe')
             else:
                 messages.error(request, 'Solo puede seleccionar Si o No')
         else:
