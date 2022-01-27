@@ -26,7 +26,7 @@
     <form method="POST">
         {% csrf_token %} <!-- token para poder enviar formulario -->
         <div class="seleccion" id="select-continente">
-            <select class="form-select" aria-label="Default select example" id="s_c_c" name="select_Continente" onclick="select_continente('s_c_c', 's_p_c')"> <!-- Select para continente -->
+            <select class="form-select" aria-label="Default select example" id="s_c_c" name="select_Continente" onclick="select_continente('s_c_c', 's_p_c', 'al-cat')"> <!-- Select para continente -->
                 <option selected>Selecciona un continente</option>
                 <option value="Asia">Asia</option>
                 <option value="América">América</option>
@@ -37,7 +37,7 @@
             </select>
         </div>
         <div class="seleccion" id="select-pais-cat">
-            <select class="form-select" aria-label="Default select example" id="s_p_c" onclick="ocultar('btn_agr','btn_edit','btn_elim','s_c_c','s_p_c','inp_pais')" name="select_Pais_cat"> <!-- Select para pais -->
+            <select class="form-select" aria-label="Default select example" id="s_p_c" onclick="ocultar('btn_agr','btn_edit','btn_elim','s_c_c','s_p_c','inp_pais','al-cat')" name="select_Pais_cat"> <!-- Select para pais -->
                 <option selected>Elige un país para editar</option>
                 {% for pais in paises %}
                 <option value='{{ pais.pais }}-{{ pais.continente }}'>{{ pais.pais }}</option> <!-- Mostrar todos los paises que envió el servidor -->

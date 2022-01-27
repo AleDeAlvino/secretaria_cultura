@@ -11,7 +11,7 @@ class Paises(models.Model):
 
 class Dependencias(models.Model):
     pais = models.ForeignKey(Paises, on_delete=models.CASCADE)
-    dependencia = models.CharField(max_length = 50, unique=True)
+    dependencia = models.CharField(max_length = 50)
     pertenencia = models.BooleanField(default=False)
     def __str__(self):
          return "{}".format(self.dependencia)
