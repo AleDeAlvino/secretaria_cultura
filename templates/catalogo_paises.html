@@ -37,7 +37,7 @@
             </select>
         </div>
         <div class="seleccion" id="select-pais-cat">
-            <select class="form-select" aria-label="Default select example" id="s_p_c" onclick="ocultar('btn_agr','btn_edit','btn_elim','s_c_c','s_p_c','inp_pais','al-cat')" name="select_Pais_cat"> <!-- Select para pais -->
+            <select class="form-select" aria-label="Default select example" id="s_p_c" onchange="ocultar('btn_agr','btn_edit','btn_elim','s_c_c','s_p_c','inp_pais','al-cat')" name="select_Pais_cat"> <!-- Select para pais -->
                 <option selected>Elige un país para editar</option>
                 {% for pais in paises %}
                 <option value='{{ pais.pais }}-{{ pais.continente }}'>{{ pais.pais }}</option> <!-- Mostrar todos los paises que envió el servidor -->

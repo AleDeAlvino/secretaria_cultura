@@ -14,14 +14,14 @@ def administracion_view(request):
 @api_view(['POST'])
 def seleccion_continente_view(request):
     #Vista para seleccionar paises por continente
-    lista_paises = ['Elige un país para editar']
+    lista_paises = [{'pais':'Elige un país para editar'}]
     if request.method == 'POST':
         for clave in request.data:
             paises = Paises.objects.filter(continente=clave).order_by('pais')
             print(paises)
         for pais in paises:
             print(pais)
-            lista_paises.append(pais.pais)
+            lista_paises.append({'pais':pais.pais, 'continente':pais.continente})
             print(lista_paises)
         return Response(lista_paises)
     return Response({})
