@@ -3,14 +3,155 @@
 <title>Catalogo Departamentos</title> <!-- Titulo de la pagina -->
 <script src="../static/javascript/js_catalogos.js"></script> <!-- Archivo que se encarga de mostrar y ocultar botones -->
 <h1 class="tit_alt_eve" id="title_cat_depar">Alta de eventos</h1> <!-- Titulo del catalogo -->
-<div class="seleccion" id="div_inp_eve">
-    <label>Evento</label>
-    <input class="form-control inp_login inp-cat" type="text" id="inp_evento" placeholder="Nombre del evento" aria-label="default input example" name="evento_nombre"> <!-- Input para agregar o editar la Dependencia -->
+<div class="contenedor_eve">
+    <div class="fila_eve">
+        <div class="datos_eve" id="div_inp_eve">
+            <h5 class="text_lbl">Evento</h5>
+            <div id="div_inp_e"><input class="form-control" type="text" id="inp_evento" placeholder="Nombre del evento" aria-label="default input example" name="evento_nombre"></div>
+        </div>
+        <div class="datos_eve" id="div_inp_date">
+            <h5 class="text_lbl">Fecha</h5>
+            <input type="date" name="hora_eve">
+        </div>
+        <div class="datos_eve" id="div_inp_hor">
+            <h5 class="text_lbl">Hora</h5>
+            <div id="div_hora_e"><input type="time" name="hora_eve"></div>
+        </div>
+    </div>
+    <div class="fila_eve">
+        <div class="seleccion" id="select-dicipina-eve">
+            <h5 class="text_lbl">Diciplina</h5>
+            <select class="form-select" aria-label="Default select example" id="s_dic_e" name="select_dicipina_eve"> <!-- Select para Dependencia -->
+                <option selected>Elige una Diciplina</option>
+                <option value='pintura'>pintura</option>
+                <option value='fotografía'>fotografía</option>
+                <option value='escultura'>escultura</option>
+                <option value='musica'>musica</option>
+                <option value='teatro'>teatro</option>
+                <option value='danza'>danza</option>
+                <option value='literatura'>literatura</option>
+                <option value='arquitectura'>arquitectura</option>
+            </select>
+        </div>
+        <div class="seleccion" id="select-evento-eve">
+            <h5 class="text_lbl">Tipo de evento</h5>
+            <select class="form-select" aria-label="Default select example" id="s_dic_e" name="select_dicipina_eve"> <!-- Select para Dependencia -->
+                <option selected>Elige un tipo de evento</option>
+                <option value='congreso'>congreso</option>
+                <option value='festival'>festival</option>
+                <option value='Exposición'>Exposición</option>
+            </select>
+        </div>
+        <div class="seleccion" id="select-artesania-eve">
+            <h5 class="text_lbl">Artesanía</h5>
+            <select class="form-select" aria-label="Default select example" id="s_dic_e" name="select_dicipina_eve"> <!-- Select para Dependencia -->
+                <option selected>Elige un tipo de Artesanía</option>
+                <option value='ceramica'>ceramica</option>
+                <option value='ofebería'>ofebería</option>
+                <option value='madera'>madera</option>
+            </select>
+        </div>
+    </div>
+    <div class="fila_eve">
+        <div class="seleccion-grande">
+            <div class="bot-select-eve">
+                <h5 class="text_lbl">Responsable</h5>
+                <div id="div_img_resp_eve">
+                    <img src="../static/images/user.png" id="img_resp_eve">
+                </div>
+            </div>
+            <div class="bot-select-eve btn_sele_eve">
+                <select class="form-select" multiple aria-label="multiple select example">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
+        <div class="seleccion-grande seleccion-grande2">
+            <div class="bot-select-eve">
+                <h5 class="text_lbl">Documentos</h5>
+                <div id="div_img_resp_eve">
+                    <img src="../static/images/user.png" id="img_resp_eve">
+                </div>
+            </div>
+            <div class="bot-select-eve btn_sele_eve">
+                <select class="form-select" multiple aria-label="multiple select example">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="fila_eve">
+        <div class="seleccion-grande">
+            <div class="bot-select-eve">
+                <h5 class="text_lbl">Asistentes</h5>
+                <div id="div_img_resp_eve">
+                    <img src="../static/images/user.png" id="img_resp_eve">
+                </div>
+            </div>
+            <div class="bot-select-eve btn_sele_eve">
+                <select class="form-select" multiple aria-label="multiple select example">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
+        <div class="seleccion-grande seleccion-grande2">
+            <div class="bot-select-eve">
+                <h5 class="text_lbl">Publicidad</h5>
+                <div id="div_img_resp_eve">
+                    <img src="../static/images/user.png" id="img_resp_eve">
+                </div>
+            </div>
+            <div class="bot-select-eve btn_sele_eve">
+                <select class="form-select" multiple aria-label="multiple select example">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="fila_eve">
+        <div class="seleccion-grande">
+            <div class="bot-select-eve">
+                <h5 class="text_lbl">Fotografías</h5>
+                <div id="div_img_resp_eve">
+                    <img src="../static/images/user.png" id="img_resp_eve">
+                </div>
+            </div>
+            <div class="bot-select-eve btn_sele_eve">
+                <select class="form-select" multiple aria-label="multiple select example">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
+        <div class="seleccion-grande seleccion-grande2">
+            <div class="bot-select-eve">
+                <h5 class="text_lbl">Observaciones</h5>
+                <div id="div_img_resp_eve">
+                    <img src="../static/images/user.png" id="img_resp_eve">
+                </div>
+            </div>
+            <div class="bot-select-eve btn_sele_eve">
+                <select class="form-select" multiple aria-label="multiple select example">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="fila_eve" id="guardar-eve">
+        <div id="guardar-eve"><button type="button" class="btn btn-success">Guardar</button></div>
+    </div>
 </div>
-<div class="seleccion" id="select-dependencia-cat">
-    <select class="form-select" aria-label="Default select example" id="s_d_c" onchange="ocultar_dep('btn_agr','btn_edit','btn_elim','s_p_c','s_d_c','inp_dep','option-pert-si','option-pert-no','alerta_cat_dep')" name="select_Dependencia_cat"> <!-- Select para Dependencia -->
-        <option selected>Elige una dependencia para editar</option>
-        <option value=''></option>
-    </select>
-</div>
+
+
 {% endblock %}

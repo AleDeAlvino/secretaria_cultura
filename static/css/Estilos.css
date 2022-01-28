@@ -280,3 +280,99 @@ body{
     top: 2%;
     left: 40%!important;
 }
+
+.datos_eve{
+    position: relative;
+    float: left;
+    width: 27%;
+    height: 20%;
+    top: 15%;
+}
+
+.text_lbl{
+    float: left;
+    margin-right: 3%;
+}
+
+#inp_evento{
+    float: left;
+}
+
+#div_inp_e{
+    width: 80%;
+    position: relative;
+    float: left;
+}
+
+.contenedor_eve{
+    float: left;
+    position: relative;
+    width: 93%;
+    /* top: 4%; */
+    left: 3%;
+}
+
+#div_inp_date{
+    float: left;
+    left: 3%!important;
+    width: 20%!important;
+}
+
+#div_inp_hor{
+    float: left;
+    left: 3%!important;
+    width: 20%!important;
+}
+
+.fila_eve{
+    position: relative;
+    float: left;
+    width: 100%;
+    margin-top: 3%;
+}
+
+#select-evento-eve{
+    left: 2.5%;
+}
+
+#select-artesania-eve{
+    left: 5%;
+}
+
+.seleccion-grande{
+    position: relative;
+    float: left;
+    width: 40%;
+}
+
+#img_resp_eve{
+    width: 100%;
+}
+
+#div_img_resp_eve{
+    float: left;
+    position: relative;
+    width: 50%;
+}
+
+.bot-select-eve{
+    position: relative;
+    float: left;
+    width: 30%;
+    height: 100%;
+}
+
+.btn_sele_eve{
+    width: 70%;
+}
+
+.seleccion-grande2{
+    left: 8%;
+}
+
+#guardar-eve{
+    position: relative;
+    float: right;
+    right: 2%;
+    margin-bottom: 2%;
+}
