@@ -271,3 +271,12 @@ body{
 #alerta_cat_per{
     left: 3.5%!important;
 }
+
+/* ---------- Alta eventos -------- */
+
+.tit_alt_eve{
+    position: relative;
+    float: left;
+    top: 2%;
+    left: 40%!important;
+}

@@ -2,6 +2,15 @@
 {% block content %}
 <title>Catalogo Departamentos</title> <!-- Titulo de la pagina -->
 <script src="../static/javascript/js_catalogos.js"></script> <!-- Archivo que se encarga de mostrar y ocultar botones -->
-<h1 class="tit_pag_cat" id="title_cat_depar">Catálogo de Departamentos</h1> <!-- Titulo del catalogo -->
-
+<h1 class="tit_alt_eve" id="title_cat_depar">Alta de eventos</h1> <!-- Titulo del catalogo -->
+<div class="seleccion" id="div_inp_eve">
+    <label>Evento</label>
+    <input class="form-control inp_login inp-cat" type="text" id="inp_evento" placeholder="Nombre del evento" aria-label="default input example" name="evento_nombre"> <!-- Input para agregar o editar la Dependencia -->
+</div>
+<div class="seleccion" id="select-dependencia-cat">
+    <select class="form-select" aria-label="Default select example" id="s_d_c" onchange="ocultar_dep('btn_agr','btn_edit','btn_elim','s_p_c','s_d_c','inp_dep','option-pert-si','option-pert-no','alerta_cat_dep')" name="select_Dependencia_cat"> <!-- Select para Dependencia -->
+        <option selected>Elige una dependencia para editar</option>
+        <option value=''></option>
+    </select>
+</div>
 {% endblock %}
