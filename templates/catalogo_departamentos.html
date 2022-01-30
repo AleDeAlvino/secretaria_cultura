@@ -2,6 +2,7 @@
 {% block content %}
 <title>Catalogo Departamentos</title> <!-- Titulo de la pagina -->
 <script src="../static/javascript/js_catalogos.js"></script> <!-- Archivo que se encarga de mostrar y ocultar botones -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <h1 class="tit_pag_cat" id="title_cat_depar">Catálogo de Departamentos</h1> <!-- Titulo del catalogo -->
 <div class="alerta_cat" id="alerta_cat_depar">
     {% if messages %} <!-- Verificamos si hay mensajes de alertas -->
@@ -25,7 +26,7 @@
     <form method="POST">
         {% csrf_token %} <!-- token para poder enviar formulario -->
         <div class="seleccion" id="select-dependencia">
-            <select class="form-select" aria-label="Default select example" id="s_depe_c" name="select_Dependencia"> <!-- Select para Dependencia -->
+            <select class="form-select" aria-label="Default select example" id="s_depe_c" name="select_Dependencia" onclick="select_depar_depe('s_depe_c','s_depa_c','alerta_cat_depar')"> <!-- Select para Dependencia -->
                 <option selected>Selecciona una Dependencia</option>
                 {% for dependencia in dependencias %}
                 <option value='{{ dependencia.dependencia }}'>{{ dependencia.dependencia }}</option> <!-- Mostrar todas las dependencias que envió el servidor -->
@@ -33,14 +34,10 @@
             </select>
         </div>
         <div class="seleccion" id="select-departamento-cat">
-            <select class="form-select" aria-label="Default select example" id="s_depa_c" onclick="ocultar('btn_agr','btn_edit','btn_elim','s_depe_c','s_depa_c','inp_departamento')" name="select_departamento_cat"> <!-- Select para departamento -->
+            <select class="form-select" aria-label="Default select example" id="s_depa_c" onchange="ocultar('btn_agr','btn_edit','btn_elim','s_depe_c','s_depa_c','inp_departamento','alerta_cat_depar')" name="select_departamento_cat"> <!-- Select para departamento -->
                 <option selected>Elige un departamento para editar</option>
                 {% for departamento in departamentos %}
-                    {% for dependencia in dependencias %}
-                        {% if departamento.dependencia == dependencia %}
-                            <option value='{{ departamento.departamento }}-{{ dependencia.dependencia }}'>{{ departamento.departamento }}</option> <!-- Mostrar todos los departamentos que envió el servidor -->
-                        {% endif %}
-                    {% endfor %}
+                    <option value='{{ departamento.departamento }}-{{ departamento.dependencia.dependencia }}'>{{ departamento.departamento }}</option> <!-- Mostrar todos los departamentos que envió el servidor -->
                 {% endfor %}
               </select>
         </div>

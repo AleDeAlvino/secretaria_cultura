@@ -46,14 +46,15 @@ def seleccion_dep_pais_view(request):
 @api_view(['POST'])
 def seleccion_depar_dep_view(request):
     #Vista para seleccionar departamentos por dependencia
-    lista_departamento = ['Elige un departamento para editar']
+    lista_departamento = [{'departamento':'Elige un departamento para editar'}]
     if request.method == 'POST':
         for clave in request.data:
-            departamentos = Departamentos.objects.filter(dependencia=clave)
+            dependencia = Dependencias.objects.get(dependencia=clave)
+            departamentos = Departamentos.objects.filter(dependencia=dependencia).order_by('departamento')
             print(departamentos)
         for departamento in departamentos:
             print(departamentos)
-            lista_departamento.append(departamento.departamento)
+            lista_departamento.append({'departamento':departamento.departamento, 'dependencia':departamento.dependencia.dependencia})
             print(lista_departamento)
         return Response(lista_departamento)
     return Response({})

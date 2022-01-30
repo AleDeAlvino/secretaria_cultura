@@ -58,6 +58,35 @@ function select_dep_pais(id_primer_select, id_segundo_select, id_alert){
     return;
 }
 
+function select_depar_depe(id_primer_select, id_segundo_select, id_alert){
+    var primer_select = document.getElementById(id_primer_select);
+    var segundo_select = document.getElementById(id_segundo_select);
+    var alerta = document.getElementById(id_alert);
+    alerta.style.display = "none";
+    console.log(primer_select.value);
+    if(primer_select.value !=primer_select.options[0].value){
+        let req1 = axios ({
+            method: 'POST',
+            url: '/seleccion_depar_dep/',
+            xsrfCookieName: 'csrftoken',
+            xsrfHeaderName: 'X-CSRFTOKEN',
+            data : primer_select.value,
+            headers : {
+                'X-CSRFTOKEN':'csrftoken'
+            }
+        }).then((response)=>{
+            this.msg = response.data;
+            console.log(response.data);
+            const htmlOptions = response.data
+            .map(item => `<option value="${item.departamento}-${item.dependencia}">${item.departamento}</option>`)
+            .join('');
+            console.log(htmlOptions);
+            segundo_select.innerHTML = htmlOptions;
+        });
+    }
+    return;
+}
+
 // -----------------------------------------------------------------------------------------------------------------------
 
 
